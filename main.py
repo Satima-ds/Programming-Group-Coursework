@@ -6,11 +6,20 @@ import time
 # Initialize main window
 root = tk.Tk()
 root.title("Daily Task Tracker")
-root.geometry("500x600")
+root.geometry("500x650")
 
-tasks = []
 current_task_index = None
 start_time = None
+
+# Load tasks from file
+try:
+    with open("tasks.json", "r") as file:
+        tasks = json.load(file)
+        for task in tasks:
+            task.setdefault('in_process', False)
+            task.setdefault('time', 0)
+except FileNotFoundError:
+    tasks = []
 
 # Function to add task
 def add_task():
@@ -32,7 +41,23 @@ def update_task_list():
             time_spent = task.get('time', 0)
             mins, secs = divmod(int(time_spent), 60)
             time_display = f"Time: {mins}m {secs}s"
-        task_listbox.insert(tk.END, f"{idx+1}. {task['name']} - {task['status']} - {time_display}")
+
+        status_display = f"{idx+1}. {task['name']} - {task['status']} - {time_display}"
+        task_listbox.insert(tk.END, status_display)
+        
+        # Visually differentiate completed tasks
+        if task['status'] == 'Complete':
+            task_listbox.itemconfig(idx, {'fg': 'green'})
+
+# Remove task
+def remove_task():
+    selected = task_listbox.curselection()
+    if selected:
+        index = selected[0]
+        del tasks[index]
+        update_task_list()
+    else:
+        messagebox.showwarning("Warning", "Select a task first!")
 
 # Toggle task status
 def toggle_status():
@@ -49,6 +74,10 @@ def start_timing():
     global current_task_index, start_time
     selected = task_listbox.curselection()
     if selected:
+        # Automatically end timing on current task
+        if current_task_index is not None:
+            stop_timing()
+
         current_task_index = selected[0]
         start_time = time.time()
         tasks[current_task_index]['in_process'] = True
@@ -76,19 +105,6 @@ def save_tasks():
     with open("tasks.json", "w") as file:
         json.dump(tasks, file)
 
-# Load tasks from file
-def load_tasks():
-    global tasks
-    try:
-        with open("tasks.json", "r") as file:
-            tasks = json.load(file)
-            for task in tasks:
-                task.setdefault('in_process', False)
-                task.setdefault('time', 0)
-        update_task_list()
-    except FileNotFoundError:
-        tasks = []
-
 # Task entry
 task_entry = tk.Entry(root, width=40)
 task_entry.pack(pady=10)
@@ -112,8 +128,11 @@ start_timer_button.pack(pady=5)
 stop_timer_button = tk.Button(root, text="Stop Task", command=stop_timing)
 stop_timer_button.pack(pady=5)
 
-# Load tasks at the beginning
-load_tasks()
+# Remove task button
+remove_task_button = tk.Button(root, text="Remove Task", command=remove_task)
+remove_task_button.pack(pady=5)
+
+update_task_list()
 
 # Ensure tasks are saved when the application closes
 root.protocol("WM_DELETE_WINDOW", lambda: (save_tasks(), root.destroy()))

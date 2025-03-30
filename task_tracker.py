@@ -13,37 +13,37 @@ class TaskTrackerApp:
         self.current_task_index = None
         self.start_time = None
 
-        # Entrée pour ajouter une tâche
+        # Entry to add the tasks
         tk.Label(root, text="New Task:").pack()
         self.task_entry = tk.Entry(root, width=40)
         self.task_entry.pack(pady=10)
 
-        # Bouton pour ajouter une tâche
+        # Add task button
         add_task_button = tk.Button(root, text="Add Task", command=self.add_task)
         add_task_button.pack()
 
-        # Liste des tâches
+        # List of tasks
         self.task_listbox = tk.Listbox(root, width=60, height=15)
         self.task_listbox.pack(pady=20)
 
-        # Boutons pour modifier l'état des tâches
+        # Button to modify the state of the task (Finished/Unfinished)
         toggle_button = tk.Button(root, text="Toggle Complete/Incomplete", command=self.toggle_status)
         toggle_button.pack(pady=5)
 
-        # Boutons pour démarrer et arrêter le chronomètre
+        # Chrono buttons
         start_timer_button = tk.Button(root, text="Start Task", command=self.start_timing)
         start_timer_button.pack(pady=5)
 
         stop_timer_button = tk.Button(root, text="Stop Task", command=self.stop_timing)
         stop_timer_button.pack(pady=5)
 
-        # Bouton pour supprimer une tâche
+        # Delete task button
         remove_task_button = tk.Button(root, text="Remove Task", command=self.remove_task)
         remove_task_button.pack(pady=5)
 
         self.update_task_list()
 
-        # Sauvegarder les tâches à la fermeture de l'application
+        # Save the tasks when the app is closed
         self.root.protocol("WM_DELETE_WINDOW", self.save_and_exit)
 
     def update_task_list(self):

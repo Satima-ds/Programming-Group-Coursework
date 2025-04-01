@@ -15,22 +15,22 @@ class TaskTrackerApp:
         self.current_task_index = None
         self.start_time = None
 
-        #----------- Notebook (Gestion des onglets) -----------
+        #----------- Notebook (Tabs managing) -----------
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack(expand=True, fill="both")
 
-        # Onglet "Tâches"
+        # Tasks tab
         self.tab_tasks = tk.Frame(self.notebook)
         self.notebook.add(self.tab_tasks, text="Tasks")
 
-        # Onglet "Calendrier"
+        # Calendar tab
         self.tab_calendar = tk.Frame(self.notebook)
         self.notebook.add(self.tab_calendar, text="Calendar")
 
-        # Ajouter le calendrier dans l'onglet
+        # Add the calendar in the tab
         self.calendar_tab = CalendarTab(self.tab_calendar)
 
-        #----------- Interface pour les tâches (DANS tab_tasks) -----------
+        #----------- Interface for the tasks in the tasks tab -----------
         tk.Label(self.tab_tasks, text="New Task:").pack()
         self.task_entry = tk.Entry(self.tab_tasks, width=40)
         self.task_entry.pack(pady=10)

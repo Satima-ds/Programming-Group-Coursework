@@ -31,4 +31,4 @@ class HistoryTab:
         self.insights_label.pack(pady=10)
 
     def load_history(self):
-        print("Charger l'historique pour la date:", self.entry_date.get(), "(à implémenter)")
+        print("Load the history for the date:", self.entry_date.get(), "(To be implemented)")

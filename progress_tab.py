@@ -29,7 +29,7 @@ class ProgressTab:
         self.btn_year_prod.pack(side=tk.LEFT, padx=5)
 
     def show_screen_time(self, period):
-        print(f"Afficher l'évolution du Screen Time pour: {period} (à implémenter)")
+        print(f"Display the screen time evolution for: {period} (To be implemented)")
 
     def show_productivity(self, period):
-        print(f"Afficher l'évolution de la Productivité pour: {period} (à implémenter)")
+        print(f"Display the productivity time for: {period} (To be implemented)")

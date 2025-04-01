@@ -128,6 +128,62 @@ class TaskTrackerApp:
         self.task_manager.save_tasks()
         self.root.destroy()
 
+#--------------Input  and daily total section
+    #~~~~Input~~~~
+
+# Screen time: 
+#Productivity Goal:
+#Productivity time:
+
+
+#producivity times ---->  <Go>  <Stop>
+
+
+    #~~~~Daily total~~~~
+
+#Screen time: 00:00   <Clear>
+#Productivity time: 00:00 <Clear>
+
+#--------------------------------------------------------
+
+
+
+#--------------Progress section
+
+#Screen Time: <WW> <MM> <YYYY>
+
+#Plot @#?!£.?/
+
+#Productivity: <WW> <MM> <YYYY>
+
+#plot @#?!£.?/
+
+
+#------------------------------------------------------------------------
+
+
+
+#---------------History and Insight section
+
+       #~~~~History~~~~~
+
+#Input date: 
+
+#Screen time: 00:00
+#Productivity Goal: 00:00
+#Productivity time: 00:00
+
+#Producivity %: 00%
+
+       #~~~~~Insights~~~~~
+
+#f"Your average productivity is up/down 00% this week 
+# while screen time is down/up 00%. Well done !/ Oh no..."
+
+#-------------------------------------------------------------------------
+
+
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = TaskTrackerApp(root)

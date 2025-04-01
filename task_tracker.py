@@ -2,52 +2,61 @@ import tkinter as tk
 from tkinter import messagebox
 import time
 from task_manager import TaskManager
+from tkinter import ttk
+from calendar_tab import CalendarTab
 
 class TaskTrackerApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Daily Task Tracker")
-        self.root.geometry("500x650")
+        self.root.geometry("600x650")
 
         self.task_manager = TaskManager()
         self.current_task_index = None
         self.start_time = None
 
-        # Entry to add the tasks
-        tk.Label(root, text="New Task:").pack()
-        self.task_entry = tk.Entry(root, width=40)
+        #----------- Notebook (Gestion des onglets) -----------
+        self.notebook = ttk.Notebook(self.root)
+        self.notebook.pack(expand=True, fill="both")
+
+        # Onglet "Tâches"
+        self.tab_tasks = tk.Frame(self.notebook)
+        self.notebook.add(self.tab_tasks, text="Tasks")
+
+        # Onglet "Calendrier"
+        self.tab_calendar = tk.Frame(self.notebook)
+        self.notebook.add(self.tab_calendar, text="Calendar")
+
+        # Ajouter le calendrier dans l'onglet
+        self.calendar_tab = CalendarTab(self.tab_calendar)
+
+        #----------- Interface pour les tâches (DANS tab_tasks) -----------
+        tk.Label(self.tab_tasks, text="New Task:").pack()
+        self.task_entry = tk.Entry(self.tab_tasks, width=40)
         self.task_entry.pack(pady=10)
 
-        # Add task button
-        add_task_button = tk.Button(root, text="Add Task", command=self.add_task)
+        add_task_button = tk.Button(self.tab_tasks, text="Add Task", command=self.add_task)
         add_task_button.pack()
 
-        # List of tasks
-        self.task_listbox = tk.Listbox(root, width=60, height=15)
+        self.task_listbox = tk.Listbox(self.tab_tasks, width=60, height=15)
         self.task_listbox.pack(pady=20)
 
-        # Button to modify the state of the task (Finished/Unfinished)
-        toggle_button = tk.Button(root, text="Toggle Complete/Incomplete", command=self.toggle_status)
+        toggle_button = tk.Button(self.tab_tasks, text="Toggle Complete/Incomplete", command=self.toggle_status)
         toggle_button.pack(pady=5)
 
-        # Chrono buttons
-        start_timer_button = tk.Button(root, text="Start Task", command=self.start_timing)
+        start_timer_button = tk.Button(self.tab_tasks, text="Start Task", command=self.start_timing)
         start_timer_button.pack(pady=5)
 
-        stop_timer_button = tk.Button(root, text="Stop Task", command=self.stop_timing)
+        stop_timer_button = tk.Button(self.tab_tasks, text="Stop Task", command=self.stop_timing)
         stop_timer_button.pack(pady=5)
 
-        # Delete task button
-        remove_task_button = tk.Button(root, text="Remove Task", command=self.remove_task)
+        remove_task_button = tk.Button(self.tab_tasks, text="Remove Task", command=self.remove_task)
         remove_task_button.pack(pady=5)
 
         self.update_task_list()
-
-        # Save the tasks when the app is closed
         self.root.protocol("WM_DELETE_WINDOW", self.save_and_exit)
 
     def update_task_list(self):
-        """Update de display of the tasks in the lists."""
         self.task_listbox.delete(0, tk.END)
         for idx, task in enumerate(self.task_manager.get_tasks()):
             if task.get('in_process', False):
@@ -60,12 +69,10 @@ class TaskTrackerApp:
             status_display = f"{idx+1}. {task['name']} - {task['status']} - {time_display}"
             self.task_listbox.insert(tk.END, status_display)
 
-            # Différencier visuellement les tâches complètes
             if task['status'] == 'Complete':
                 self.task_listbox.itemconfig(idx, {'fg': 'green'})
 
     def add_task(self):
-        """Add a new task"""
         task_name = self.task_entry.get()
         if task_name:
             self.task_manager.add_task(task_name)
@@ -75,7 +82,6 @@ class TaskTrackerApp:
             messagebox.showwarning("Warning", "Task name cannot be empty!")
 
     def remove_task(self):
-        """Delete the selectioned task"""
         selected = self.task_listbox.curselection()
         if selected:
             index = selected[0]
@@ -85,7 +91,6 @@ class TaskTrackerApp:
             messagebox.showwarning("Warning", "Select a task first!")
 
     def toggle_status(self):
-        """Modifie the state of the selectioned task."""
         selected = self.task_listbox.curselection()
         if selected:
             index = selected[0]
@@ -95,12 +100,11 @@ class TaskTrackerApp:
             messagebox.showwarning("Warning", "Select a task first!")
 
     def start_timing(self):
-        """Start the chrono for the selectioned task."""
         selected = self.task_listbox.curselection()
         if selected:
             index = selected[0]
             if self.current_task_index is not None:
-                self.stop_timing()  # Arrêter le chronomètre précédent
+                self.stop_timing()
             self.current_task_index = index
             self.start_time = time.time()
             self.task_manager.start_task(index)
@@ -110,7 +114,6 @@ class TaskTrackerApp:
             messagebox.showwarning("Warning", "Select a task first!")
 
     def stop_timing(self):
-        """Stop the chrono and display the time"""
         if self.current_task_index is not None and self.start_time is not None:
             elapsed_time = time.time() - self.start_time
             self.task_manager.stop_task(self.current_task_index, elapsed_time)
@@ -122,7 +125,10 @@ class TaskTrackerApp:
             messagebox.showwarning("Warning", "No task is currently being timed!")
 
     def save_and_exit(self):
-        """Save the task."""
         self.task_manager.save_tasks()
         self.root.destroy()
 
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = TaskTrackerApp(root)
+    root.mainloop()

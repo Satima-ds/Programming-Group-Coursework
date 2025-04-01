@@ -3,7 +3,12 @@ from tkinter import messagebox
 import time
 from task_manager import TaskManager
 from tkinter import ttk
+
+
 from calendar_tab import CalendarTab
+from Input_tab import InputDailyTab
+from progress_tab import ProgressTab
+from history_tab import HistoryTab
 
 class TaskTrackerApp:
     def __init__(self, root):
@@ -15,28 +20,38 @@ class TaskTrackerApp:
         self.current_task_index = None
         self.start_time = None
 
-        #----------- Notebook (Tabs managing) -----------
+        #----------- Notebook (Gestion des onglets) -----------
         self.notebook = ttk.Notebook(self.root)
         self.notebook.pack(expand=True, fill="both")
 
-        # Tasks tab
+        # Onglet "Tâches"
         self.tab_tasks = tk.Frame(self.notebook)
         self.notebook.add(self.tab_tasks, text="Tasks")
 
-        # Calendar tab
+        # Onglet "Calendrier"
         self.tab_calendar = tk.Frame(self.notebook)
         self.notebook.add(self.tab_calendar, text="Calendar")
 
         self.calendar_tab = CalendarTab(self.tab_calendar)
 
-        #"Input ~ Daily total" tab
-        
-        #"Progress" tab
-        
-        #"History ~ Insight" tab
+        #Onglet "Input ~ Daily total"
+        self.tab_input_daily = tk.Frame(self.notebook)
+        self.notebook.add(self.tab_input_daily, text = "Input & Daily Total")
+        self.input_daily_tab = InputDailyTab(self.tab_input_daily)
 
-        
-        #----------- Interface for the tasks in the tasks tab -----------
+        #Onglet "Progress"
+        self.tab_progress = tk.Frame(self.notebook)
+        self.notebook.add(self.tab_progress, text="Progress")
+        self.progress_tab = ProgressTab(self.tab_progress)
+
+
+        #Onglet "History ~ Insight"
+        self.tab_history = tk.Frame(self.notebook)
+        self.notebook.add(self.tab_history, text="History & Insights")
+        self.history_tab = HistoryTab(self.tab_history)
+
+
+        #----------- Interface pour les tâches (DANS tab_tasks) -----------
         tk.Label(self.tab_tasks, text="New Task:").pack()
         self.task_entry = tk.Entry(self.tab_tasks, width=40)
         self.task_entry.pack(pady=10)
@@ -133,60 +148,6 @@ class TaskTrackerApp:
     def save_and_exit(self):
         self.task_manager.save_tasks()
         self.root.destroy()
-
-#--------------Input  and daily total section
-    #~~~~Input~~~~
-
-# Screen time: 
-#Productivity Goal:
-#Productivity time:
-
-
-#producivity times ---->  <Go>  <Stop>
-
-
-    #~~~~Daily total~~~~
-
-#Screen time: 00:00   <Clear>
-#Productivity time: 00:00 <Clear>
-
-#--------------------------------------------------------
-
-
-
-#--------------Progress section
-
-#Screen Time: <WW> <MM> <YYYY>
-
-#Plot @#?!£.?/
-
-#Productivity: <WW> <MM> <YYYY>
-
-#plot @#?!£.?/
-
-
-#------------------------------------------------------------------------
-
-
-
-#---------------History and Insight section
-
-       #~~~~History~~~~~
-
-#Input date: 
-
-#Screen time: 00:00
-#Productivity Goal: 00:00
-#Productivity time: 00:00
-
-#Producivity %: 00%
-
-       #~~~~~Insights~~~~~
-
-#f"Your average productivity is up/down 00% this week 
-# while screen time is down/up 00%. Well done !/ Oh no..."
-
-#-------------------------------------------------------------------------
 
 
 

@@ -27,9 +27,15 @@ class TaskTrackerApp:
         self.tab_calendar = tk.Frame(self.notebook)
         self.notebook.add(self.tab_calendar, text="Calendar")
 
-        # Add the calendar in the tab
         self.calendar_tab = CalendarTab(self.tab_calendar)
 
+        #"Input ~ Daily total" tab
+        
+        #"Progress" tab
+        
+        #"History ~ Insight" tab
+
+        
         #----------- Interface for the tasks in the tasks tab -----------
         tk.Label(self.tab_tasks, text="New Task:").pack()
         self.task_entry = tk.Entry(self.tab_tasks, width=40)

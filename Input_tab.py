@@ -23,7 +23,7 @@ class InputDailyTab:
         self.entry_productivity_time = tk.Entry(input_frame, width=10)
         self.entry_productivity_time.grid(row=2, column=1, padx=5, pady=5)
 
-        # Boutons du timer
+        # timer button
         timer_frame = tk.Frame(input_frame)
         timer_frame.grid(row=3, column=0, columnspan=2, pady=5)
         self.btn_go = tk.Button(timer_frame, text="Go", command=self.start_productivity_timer)
@@ -46,17 +46,17 @@ class InputDailyTab:
         self.btn_clear_productivity.grid(row=1, column=1, padx=5, pady=5)
 
     def start_productivity_timer(self):
-        # Logique pour démarrer le chronomètre de productivité
-        print("Démarrage du chronomètre de productivité... (à implémenter)")
+        # Start the productivithy chrono
+        print("The productivity timer is staring... (to be implemented)")
 
     def stop_productivity_timer(self):
-        # Logique pour arrêter le chronomètre de productivité
-        print("Arrêt du chronomètre de productivité... (à implémenter)")
+        # Stop the productivity chrono
+        print("The productivity chrono is stopping... (to be implemented)")
 
     def clear_screen_time(self):
-        # Logique pour réinitialiser le temps d'écran journalier
-        print("Réinitialisation du temps d'écran journalier... (à implémenter)")
+        # Clear the daily screen time
+        print("The daily screen time has been cleared... (to be implemented)")
 
     def clear_productivity_time(self):
-        # Logique pour réinitialiser le temps de productivité journalier
-        print("Réinitialisation du temps de productivité journalier... (à implémenter)")
+        # Clear the daily productivity time
+        print("The daily productivity time has been cleared ... (to be implemented)")

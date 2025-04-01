@@ -3,13 +3,13 @@ from tkcalendar import Calendar
 
 class CalendarTab:
     def __init__(self, parent):
-        self.parent = parent  # Utilise l'onglet donné par TaskTrackerApp
+        self.parent = parent  # Use the tab in task_tracker.py
 
-        # Ajout du calendrier dans l'onglet
+        # Add the calendar in the tab
         self.calendar = Calendar(self.parent, selectmode="day", year=2025, month=3, day=31)
         self.calendar.pack(pady=20)
 
-        # Bouton pour récupérer la date sélectionnée
+        # Button to take the selected date
         self.select_button = tk.Button(self.parent, text="Get Date", command=self.get_date)
         self.select_button.pack()
 
